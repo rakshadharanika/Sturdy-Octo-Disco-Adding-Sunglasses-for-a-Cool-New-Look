@@ -25,68 +25,86 @@ Welcome to Sturdy Octo Disco, a fun and creative project designed to overlay sun
 - Adding flair to your photos for fun.
 - Practicing computer vision workflows.
 
-Feel free to fork, contribute, or customize this project for your creative needs!
-## program developed by
-RAKSHA DHARANIKA V
-212223230167
+  ## PROGRAM:
+Developed by: V RAKSHA DHARANIKA
+Register Number: 212223230167
+
 ```
-# Import libraries
+# Import libraries and Load the Face Image
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
-# Load the Face Image
-faceImage = cv2.imread('Harshini.jpg')
+faceImage = cv2.imread('643.JPG')
 plt.imshow(faceImage[:,:,::-1]);plt.title("Face")
 ```
-![image](https://github.com/user-attachments/assets/3ee22427-e015-4931-bab0-32df3be205d5)
 
-# Load the Sunglass image with Alpha channel
-# (http://pluspng.com/sunglass-png-1104.html)
+![image](https://github.com/user-attachments/assets/51588ed5-f177-4632-b066-2c547a1593f3)
+
+
 ```
-glassPNG = cv2.imread('sunglass.png',-1)
-plt.imshow(glassPNG[:,:,::-1]);plt.title("glassPNG")
-```
-![image](https://github.com/user-attachments/assets/04012c98-dec3-431b-bf7d-95a86d4a6738)
-
-
-
 # Resize the image to fit over the eye region
-```
-glassPNG = cv2.resize(glassPNG,(90,30))
+glassPNG = cv2.resize(glassPNG,(190,70))
 print("image Dimension ={}".format(glassPNG.shape))
 ```
-![image](https://github.com/user-attachments/assets/3bb10e9d-2c98-470c-94f2-79e6b7fa3b7f)
+
+![image](https://github.com/user-attachments/assets/5d8fe46d-b534-445e-8ebe-dd8275844c12)
+
 
 ```
+# Resize the image to fit over the eye region
+glassPNG = cv2.resize(glassPNG,(190,70))
+print("image Dimension ={}".format(glassPNG.shape))
+
 # Separate the Color and alpha channels
-```
 glassBGR = glassPNG[:,:,0:3]
 glassMask1 = glassPNG[:,:,3]
-```
 
 # Display the images for clarity
-```
 plt.figure(figsize=[15,15])
 plt.subplot(121);plt.imshow(glassBGR[:,:,::-1]);plt.title('Sunglass Color channels');
 plt.subplot(122);plt.imshow(glassMask1,cmap='gray');plt.title('Sunglass Alpha channel');
 ```
+
+![image](https://github.com/user-attachments/assets/33d32e26-e017-450c-a93f-40f2ceb9da91)
+
+
 ```
-
-![image](https://github.com/user-attachments/assets/3ece9f02-cbf2-4bc0-beb0-1fe22a663824)
-
-
-# Make a copy
-```
-#faceWithGlassesNaive = resized_faceImage.copy()
 faceWithGlassesNaive = faceImage.copy()
-```
 # Replace the eye region with the sunglass image
-
-```
-faceWithGlassesNaive[60:90,60:150]=glassBGR
+faceWithGlassesNaive[150:220, 120:310]=glassBGR
 
 plt.imshow(faceWithGlassesNaive[...,::-1])
 ```
-![image](https://github.com/user-attachments/assets/4ab88f32-bee7-4540-a63d-803eca9c9085)
+
+![image](https://github.com/user-attachments/assets/7a6197ab-d97c-4cf6-8ca1-1bd23e1745c2)
+
+
+```
+glassMask = cv2.merge((glassMask1,glassMask1,glassMask1))
+glassMask = np.uint8(glassMask/255)
+faceWithGlassesArithmetic = faceImage.copy()
+eyeROI= faceWithGlassesArithmetic[150:220, 120:310]
+maskedEye = cv2.multiply(eyeROI,(1-glassMask ))
+maskedGlass = cv2.multiply(glassBGR,glassMask)
+eyeRoiFinal = cv2.add(maskedEye, maskedGlass)
+plt.figure(figsize=[20,20])
+plt.subplot(131);plt.imshow(maskedEye[...,::-1]);plt.title("Masked Eye Region")
+plt.subplot(132);plt.imshow(maskedGlass[...,::-1]);plt.title("Masked Sunglass Region")
+plt.subplot(133);plt.imshow(eyeRoiFinal[...,::-1]);plt.title("Augmented Eye and Sunglass")
+```
+
+![image](https://github.com/user-attachments/assets/391facf9-750b-40dc-8076-d31cdacf6b0e)
+
+
+```
+faceWithGlassesArithmetic[150:220, 120:310]=eyeRoiFinal
+plt.figure(figsize=[20,20]);
+plt.subplot(121);plt.imshow(faceImage[:,:,::-1]); plt.title("Original Image");
+plt.subplot(122);plt.imshow(faceWithGlassesArithmetic[:,:,::-1]);plt.title("With Sunglasses");
+```
+
+![image](https://github.com/user-attachments/assets/8f866729-6ea4-4b5b-9dfd-0599961ed531)
+
+ 
+
 
