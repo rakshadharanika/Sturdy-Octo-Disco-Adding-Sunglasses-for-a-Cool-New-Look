@@ -71,7 +71,7 @@ plt.figure(figsize=[15,15])
 plt.subplot(121);plt.imshow(glassBGR[:,:,::-1]);plt.title('Sunglass Color channels');
 plt.subplot(122);plt.imshow(glassMask1,cmap='gray');plt.title('Sunglass Alpha channel');
 ```
-
+```
 
 ![image](https://github.com/user-attachments/assets/3ece9f02-cbf2-4bc0-beb0-1fe22a663824)
 
