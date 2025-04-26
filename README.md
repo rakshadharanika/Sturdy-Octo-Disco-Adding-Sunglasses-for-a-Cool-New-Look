@@ -25,8 +25,8 @@ Welcome to Sturdy Octo Disco, a fun and creative project designed to overlay sun
 - Adding flair to your photos for fun.
 - Practicing computer vision workflows.
 
-  ## PROGRAM:
-  ```
+## PROGRAM:
+```
 Developed by: V RAKSHA DHARANIKA
 Register Number: 212223230167
 ```
@@ -78,8 +78,6 @@ plt.figure(figsize=[20,20]);
 plt.subplot(121);plt.imshow(faceImage[:,:,::-1]); plt.title("Original Image");
 plt.subplot(122);plt.imshow(faceWithGlassesArithmetic[:,:,::-1]);plt.title("With Sunglasses");
 ```
-
-![image](https://github.com/user-attachments/assets/9d1a6265-65c1-44c4-a483-9ee233dd4863)
-
+![image](https://github.com/user-attachments/assets/47106686-6725-4381-8d42-c1b34981c3a6)
 
 
